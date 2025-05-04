@@ -1,0 +1,247 @@
+/* RESET CƠ BẢN */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* TOÀN TRANG */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    padding: 20px;
+  }
+  
+  /* HEADER */
+  header {
+    background-color: #ffffff;
+    padding: 20px;
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  header .text-lg {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 8px;
+  }
+  
+  header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1e2a38;
+  }
+  
+  header a#toggleGuide {
+    display: inline-block;
+    margin-top: 12px;
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  header a#toggleGuide:hover {
+    text-decoration: underline;
+  }
+  
+  /* HƯỚNG DẪN */
+  #guideContent {
+    margin-top: 15px;
+    background-color: #eef6ff;
+    border: 1px solid #3498db;
+    padding: 15px;
+    border-radius: 6px;
+    text-align: left;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  /* MAIN */
+  main section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* TIÊU ĐỀ MỤC */
+  main h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 8px;
+  }
+  
+  /* GRID HÌNH ẢNH */
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  /* KHUNG ẢNH */
+  .border {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #fdfdfd;
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .border label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .border input[type="file"] {
+    margin-bottom: 10px;
+  }
+  
+  
+  /*Ảnh*/
+  img {
+    max-width: 300px;
+    height: auto;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    display: block;        /* Giúp ảnh căn giữa dễ hơn */
+    margin-left: auto;
+    margin-right: auto;    /* Hai dòng này giúp căn giữa ảnh */
+  }
+  
+  .result-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Căn giữa các khối */
+    gap: 20px;
+  }
+  
+  .result-grid div {
+    width: 320px;            /* Cố định chiều rộng mỗi khối chứa ảnh */
+    text-align: center;
+  }
+  .website-url {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px; /* cách dòng văn bản phía dưới */
+  }
+  
+  
+
+
+  /* NÚT */
+  button {
+    padding: 10px 18px;
+    background: linear-gradient(45deg, #d34949,#05cef1);
+    color: white ;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 17px;
+  }
+  
+  button:hover {
+    background: linear-gradient(45deg,#05cef1, #d34949);
+    
+  }
+  
+  button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+  }
+  #clearDataBtn{
+    margin-left: 20px; 
+    margin-top: -150px;
+    background: linear-gradient(45deg, #cb118d, #2575fc);
+
+  }
+  #clearDataBtn:hover{
+    background: linear-gradient(45deg, #2575fc, #cb118d);
+  }
+  /* KẾT QUẢ */
+  #diffResult {
+    font-size: 18px;
+    font-weight: bold;
+    color: #c0392b;
+    margin-top: 10px;
+  }
+
+  .result-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .result-grid div {
+    text-align: center;
+  }
+  
+  .result-grid img {
+    max-width: 250px;
+    height: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+  }
+
+
+  
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 14px;
+    color: #777;
+    margin-top: 40px;
+  }
+
+
+/*Hướng dẫn*/
+
+  #toggleGuide {
+    display: none;
+  }
+
+  #toggleGuide:checked + label + .guide-steps {
+    display: block;
+  }
+
+  .guide-steps {
+    display: none;
+    margin-top: 10px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .guide-steps ol{
+    padding-left: 10px;
+  }
+  .guide-steps li{
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 0.2;
+    list-style-position: inside;/*đảm bảo só thứ tự nằm cùng dòng với nội dung*/
+  }
+  .guide-steps li::marker {
+    font-weight: bold;
+  }
+  label {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+  }

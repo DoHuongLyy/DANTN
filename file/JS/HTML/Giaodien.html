@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiểm thử giao diện bằng PixelMatch</title>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <link rel="stylesheet" href="../CSS/Giaodien.css"> <!-- Liên kết đến tệp CSS -->
+  <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <header>
+    <h1 class="text-xl md:text-2xl font-semibold text-center">KIỂM THỬ GIAO DIỆN BẰNG PixelMatch</h1>
+    <input type="checkbox" id="toggleGuide">
+    <label for="toggleGuide">Hướng Dẫn</label>
+    <div class="guide-steps">
+      <ol>
+        <li>Chọn ảnh thiết kế (Figma) từ máy bạn.</li>
+        <li>Nhấn "Tải lên" để hệ thống tự động chụp ảnh website.</li>
+        <li>Sau khi có cả hai ảnh, nhấn "So sánh" để tạo ảnh diff.</li>
+        <li>Xem ảnh diff để kiểm tra giao diện có đúng với thiết kế không.</li>
+          </ol>
+        </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. Chọn ảnh thiết kế</h2>
+      <input type="file" id="imageDesigns" accept="image/*" multiple />
+    </section>
+
+    <section>
+      <h2>2. Nhập URL</h2>
+      <div id="imagePairsContainer"></div>
+      <button id="uploadAndCompareBtn">Gửi và So sánh</button>
+    </section>
+
+    <section>
+      <h2>Kết quả so sánh</h2>
+      <div id="resultsContainer" class="highlight">0% pixel khác biệt</div>
+      
+  <!-- <p>Kết quả: <span id="diffResult" class="highlight">0% pixel khác biệt</span></p> -->
+  <button id="downloadReportBtn">Tải xuống báo cáo</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 - Kiểm thử giao diện | ĐỖ HƯƠNG LY | 125216</p>
+  </footer>
+
+  <script>
+    document.getElementById("imageDesigns").addEventListener("change", function (e) {
+      const files = e.target.files;
+      const container = document.getElementById("imagePairsContainer");
+      container.innerHTML = "";
+
+      Array.from(files).forEach((file, index) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "image-pair";
+
+        const fileLabel = document.createElement("p");
+        fileLabel.innerText = `Ảnh thiết kế ${index + 1}: ${file.name}`;
+        wrapper.appendChild(fileLabel);
+
+        const urlInput = document.createElement("input");
+        urlInput.type = "text";
+        urlInput.placeholder = "Nhập URL website cần chụp";
+        urlInput.className = "website-url";
+        wrapper.appendChild(urlInput);
+
+        const previewImg = document.createElement("img");
+        previewImg.src = URL.createObjectURL(file);
+        wrapper.appendChild(previewImg);
+
+        container.appendChild(wrapper);
+      });
+    });
+
+    document.getElementById("uploadAndCompareBtn").addEventListener("click", async function () {
+      const files = document.getElementById("imageDesigns").files;
+      const urls = document.querySelectorAll(".website-url");
+      const resultsContainer = document.getElementById("resultsContainer");
+
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append("designImages", files[i]);
+        formData.append("websiteURLs", urls[i].value);
+      }
+
+      try {
+        const response = await fetch("http://127.0.0.1:3000/compare-many", {
+          method: "POST",
+          body: formData
+        });
+
+        const results = await response.json();
+        resultsContainer.innerHTML = "";
+
+        results.forEach((result, index) => {
+          const resultBlock = document.createElement("div");
+
+          if (result.error) {
+            resultBlock.innerHTML = `<p>Lỗi cặp ${index + 1}: ${result.error}</p>`;
+          } else {
+            resultBlock.innerHTML = `
+              <h3>Kết quả cặp ${index + 1}</h3>
+              <p>${result.khac} pixel khác biệt</p>
+              <img src="http://127.0.0.1:3000/${result.linkImg1}" alt="Ảnh thiết kế">
+              <img src="http://127.0.0.1:3000/${result.linkImg2}" alt="Ảnh thực tế">
+              <img src="http://127.0.0.1:3000/${result.linkImg3}" alt="Ảnh diff">
+              <hr/>
+            `;
+          }
+
+          resultsContainer.appendChild(resultBlock);
+        });
+
+      } catch (err) {
+        alert("Lỗi khi gửi yêu cầu so sánh!");
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>
